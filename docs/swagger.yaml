@@ -139,11 +139,322 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/R'
+                $ref: '#/components/schemas/RString'
         '400':
           description: Invalid request
         '401':
           description: Unauthorized
+  /device-group:
+    post:
+      summary: 创建设备组
+      operationId: createDeviceGroup
+      tags:
+        - 设备组管理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeviceGroup'
+      responses:
+        '200':
+          description: 成功创建设备组
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RDeviceGroup'
+
+  /device-group/list/{device_id}:
+    get:
+      summary: 获取设备组列表
+      operationId: listDeviceGroups
+      tags:
+        - 设备组管理
+      parameters:
+        - name: device_id
+          in: path
+          description: 设备 ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功获取设备组列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RDeviceGroupList'
+
+  /device-group/{id}:
+    get:
+      summary: 获取设备组详情
+      operationId: getDeviceGroup
+      tags:
+        - 设备组管理
+      parameters:
+        - name: id
+          in: path
+          description: 设备组 ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功获取设备组详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RDeviceGroup'
+        '404':
+          description: 设备组不存在
+
+    put:
+      summary: 更新设备组
+      operationId: updateDeviceGroup
+      tags:
+        - 设备组管理
+      parameters:
+        - name: id
+          in: path
+          description: 设备组 ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceGroup'
+      responses:
+        '200':
+          description: 成功更新设备组
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RString'
+        '404':
+          description: 设备组不存在
+
+    delete:
+      summary: 删除设备组
+      operationId: deleteDeviceGroup
+      tags:
+        - 设备组管理
+      parameters:
+        - name: id
+          in: path
+          description: 设备组 ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功删除设备组
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RString'
+        '404':
+          description: 设备组不存在
+  /device/{id}:
+    get:
+      summary: Get device by ID
+      operationId: getDevice
+      tags:
+        - 设备管理
+      parameters:
+        - name: id
+          in: path
+          description: Device ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDTO'
+        '404':
+          description: Device not found
+    put:
+      summary: Update device by ID
+      operationId: updateDevice
+      tags:
+        - 设备管理
+      parameters:
+        - name: id
+          in: path
+          description: Device ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceDTO'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RString'
+        '404':
+          description: Device not found
+
+  /device:
+    get:
+      summary: Get all devices
+      operationId: listDevices
+      tags:
+        - 设备管理
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDTO'
+    post:
+      summary: Create a new device
+      operationId: createDevice
+      tags:
+        - 设备管理
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDevice'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDTO'
+
+  /device/{device_id}:
+    delete:
+      summary: Delete device by ID
+      operationId: deleteDevice
+      tags:
+        - 设备管理
+      parameters:
+        - name: device_id
+          in: path
+          description: Device ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RString'
+  /export-config:
+    post:
+      summary: 创建导出配置
+      tags:
+        - 导出配置
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportConfig'
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RExportConfig'
+  /export-config/{id}:
+    get:
+      summary: 获取导出配置详情
+      tags:
+        - 导出配置
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RExportConfig'
+    put:
+      summary: 更新导出配置
+      tags:
+        - 导出配置
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportConfig'
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+    delete:
+      summary: 删除导出配置
+      tags:
+        - 导出配置
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+  /export-config/list:
+    get:
+      summary: 获取导出配置列表
+      tags:
+        - 导出配置
+      parameters:
+        - in: query
+          name: plugin_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 操作成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RExportConfigListResponse'
+
 components:
   schemas:
     PluginConfig:
@@ -211,3 +522,168 @@ components:
         password:
           type: string
           description: 密码
+    CreateDeviceGroup:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 设备组名称
+        interval:
+          type: integer
+          description: 间隔时间
+        device_id:
+          type: integer
+          description: 设备 ID
+
+    DeviceGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 设备组 ID
+        name:
+          type: string
+          description: 设备组名称
+        interval:
+          type: integer
+          description: 间隔时间
+        device_id:
+          type: integer
+          description: 设备 ID
+
+    RDeviceGroup:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 响应代码
+        success:
+          type: boolean
+          description: 请求是否成功
+        msg:
+          type: string
+          description: 响应消息
+        data:
+          $ref: '#/components/schemas/DeviceGroup'
+
+    RDeviceGroupList:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 响应代码
+        success:
+          type: boolean
+          description: 请求是否成功
+        msg:
+          type: string
+          description: 响应消息
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceGroup'
+
+    RString:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 响应代码
+        success:
+          type: boolean
+          description: 请求是否成功
+        msg:
+          type: string
+          description: 响应消息
+    DeviceDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        deviceType:
+          $ref: '#/components/schemas/DeviceType'
+        customData:
+          type: object
+          additionalProperties:
+            type: string
+        protocolName:
+          type: string
+
+    DeviceType:
+      type: string
+      enum: [type1, type2, type3]
+
+    CreateDevice:
+      type: object
+      properties:
+        name:
+          type: string
+        deviceType:
+          $ref: '#/components/schemas/DeviceType'
+        customData:
+          type: object
+          additionalProperties:
+            type: string
+        protocolName:
+          type: string
+    ExportConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 导出配置ID
+        name:
+          type: string
+          description: 推送名称
+        configuration:
+          type: object
+          additionalProperties:
+            type: string
+          description: 推送配置
+        description:
+          type: string
+          description: 描述
+        plugin_id:
+          type: integer
+          description: 插件ID
+    RExportConfig:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 响应代码
+        success:
+          type: boolean
+          description: 请求是否成功
+        msg:
+          type: string
+          description: 响应消息
+        data:
+          $ref: '#/components/schemas/ExportConfig'
+    RExportConfigListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 响应代码
+        success:
+          type: boolean
+          description: 请求是否成功
+        msg:
+          type: string
+          description: 响应消息
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportConfig'
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 请求是否成功
+        message:
+          type: string
+          description: 响应消息
